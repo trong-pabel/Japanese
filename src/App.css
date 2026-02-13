@@ -22,32 +22,45 @@
          hover:opacity-80 transition-opacity active:scale-95;
 }
 
+.quiz-options-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 w-full max-w-4xl mt-4 px-2 sm:px-0;
+}
+
 .quiz-option {
-  @apply w-full text-left px-4 py-3 rounded-xl border-2 border-border bg-card 
-         hover:border-primary hover:bg-muted transition-all cursor-pointer text-foreground font-medium
-         flex items-center gap-3;
+  @apply w-full text-left px-6 py-5 rounded-2xl border-2 border-border bg-card
+         hover:border-primary hover:bg-muted/70 hover:shadow-md
+         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+         active:scale-[0.99] transition-all cursor-pointer text-foreground
+         flex items-center gap-4 min-h-[110px];
 }
 
 .quiz-option-correct {
-  @apply w-full text-left px-4 py-3 rounded-xl border-2 font-medium flex items-center gap-3;
+  @apply w-full text-left px-6 py-5 rounded-2xl border-2 shadow-sm
+         flex items-center gap-4 min-h-[110px];
   border-color: hsl(var(--correct));
   background-color: hsl(var(--correct) / 0.1);
   color: hsl(var(--correct));
 }
 
 .quiz-option-incorrect {
-  @apply w-full text-left px-4 py-3 rounded-xl border-2 font-medium flex items-center gap-3;
+  @apply w-full text-left px-6 py-5 rounded-2xl border-2 shadow-sm
+         flex items-center gap-4 min-h-[110px];
   border-color: hsl(var(--incorrect));
   background-color: hsl(var(--incorrect) / 0.1);
   color: hsl(var(--incorrect));
 }
 
 .quiz-option-disabled {
-  @apply w-full text-left px-4 py-3 rounded-xl border-2 border-border bg-card 
-         text-muted-foreground font-medium opacity-50 flex items-center gap-3;
+  @apply w-full text-left px-6 py-5 rounded-2xl border-2 border-border bg-card
+         text-muted-foreground opacity-55 shadow-sm
+         flex items-center gap-4 min-h-[110px];
 }
 
 .quiz-badge {
-  @apply inline-flex items-center justify-center w-7 h-7 rounded-lg bg-muted text-muted-foreground 
-         text-sm font-bold shrink-0;
+  @apply inline-flex items-center justify-center w-11 h-11 rounded-xl border border-border
+         bg-muted text-foreground text-lg font-bold shrink-0;
+}
+
+.quiz-option-text {
+  @apply flex-1 text-xl sm:text-2xl leading-tight font-semibold;
 }

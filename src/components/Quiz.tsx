@@ -217,6 +217,23 @@ export default function Quiz({ title, items, totalQuestions, onFinish, storageKe
 
   if (!question) return null;
 
+  const optionBaseClass =
+    "w-full text-left px-6 py-5 rounded-2xl border-2 border-border bg-card shadow-sm " +
+    "hover:border-primary hover:bg-muted/70 hover:shadow-md " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 " +
+    "active:scale-[0.99] transition-all cursor-pointer flex items-center gap-4 min-h-[110px]";
+  const optionCorrectClass =
+    "w-full text-left px-6 py-5 rounded-2xl border-2 border-[hsl(var(--correct))] " +
+    "bg-[hsl(var(--correct)/0.1)] text-[hsl(var(--correct))] shadow-sm " +
+    "flex items-center gap-4 min-h-[110px]";
+  const optionIncorrectClass =
+    "w-full text-left px-6 py-5 rounded-2xl border-2 border-[hsl(var(--incorrect))] " +
+    "bg-[hsl(var(--incorrect)/0.1)] text-[hsl(var(--incorrect))] shadow-sm " +
+    "flex items-center gap-4 min-h-[110px]";
+  const optionDisabledClass =
+    "w-full text-left px-6 py-5 rounded-2xl border-2 border-border bg-card text-muted-foreground " +
+    "opacity-55 shadow-sm flex items-center gap-4 min-h-[110px]";
+
   return (
     <div className="flex flex-col items-center gap-6 py-8 animate-fade-in">
       <div className="flex items-center justify-between w-full max-w-md px-2">
@@ -245,14 +262,14 @@ export default function Quiz({ title, items, totalQuestions, onFinish, storageKe
         </p>
       </div>
 
-      {/* 2x2 grid with numbered badges */}
-      <div className="grid grid-cols-2 gap-3 w-full max-w-md mt-2">
+      {/* Answer cards: 1 column on mobile, 2x2 on desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mt-6 px-2 sm:px-0">
         {question.options.map((opt, idx) => {
-          let cls = "quiz-option";
+          let cls = optionBaseClass;
           if (selected !== null) {
-            if (idx === question.correctIndex) cls = "quiz-option-correct";
-            else if (idx === selected) cls = "quiz-option-incorrect";
-            else cls = "quiz-option-disabled";
+            if (idx === question.correctIndex) cls = optionCorrectClass;
+            else if (idx === selected) cls = optionIncorrectClass;
+            else cls = optionDisabledClass;
           }
           return (
             <button
@@ -261,8 +278,10 @@ export default function Quiz({ title, items, totalQuestions, onFinish, storageKe
               disabled={selected !== null}
               className={cls}
             >
-              <span className="quiz-badge">{idx + 1}</span>
-              <span className="flex-1">{opt}</span>
+              <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-border bg-muted text-foreground text-lg font-bold shrink-0">
+                {idx + 1}
+              </span>
+              <span className="flex-1 text-xl sm:text-2xl leading-tight font-semibold">{opt}</span>
             </button>
           );
         })}
