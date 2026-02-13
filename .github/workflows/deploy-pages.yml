@@ -24,27 +24,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - name: Setup Bun
-        if: ${{ hashFiles('bun.lockb') != '' }}
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Install dependencies (Bun)
-        if: ${{ hashFiles('bun.lockb') != '' }}
-        run: bun install --frozen-lockfile
-
-      - name: Install dependencies (npm)
-        if: ${{ hashFiles('bun.lockb') == '' }}
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build site (Bun)
-        if: ${{ hashFiles('bun.lockb') != '' }}
-        run: bun run build
-
-      - name: Build site (npm)
-        if: ${{ hashFiles('bun.lockb') == '' }}
+      - name: Build site
         run: npm run build
 
       - name: Setup Pages
