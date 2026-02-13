@@ -1,73 +1,77 @@
-# Welcome to your Lovable project
+# Japanese (Vite + React + TypeScript)
 
-## Project info
+This project is configured for deployment to GitHub Pages at:
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+`https://<username>.github.io/Japanese/`
 
-## How can I edit this code?
+## Local development
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+This repository contains `bun.lockb`, so Bun is the primary package manager.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+bun install
+bun run dev
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+If you prefer npm:
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```sh
+npm ci
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Build locally
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+bun run build
+```
 
-**Use GitHub Codespaces**
+The production output is generated in `dist/`.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## GitHub Pages deployment (automatic on push to `main`)
 
-## What technologies are used for this project?
+The workflow file is:
 
-This project is built with:
+`.github/workflows/deploy-pages.yml`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+It will:
 
-## How can I deploy this project?
+1. Check out code.
+2. Set up Node.js.
+3. Install dependencies (`bun install` when `bun.lockb` exists, otherwise `npm ci`).
+4. Build the site.
+5. Upload `dist/` as the Pages artifact.
+6. Deploy using official GitHub Pages actions.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## One-time GitHub setup
 
-## Can I connect a custom domain to my Lovable project?
+1. Open your repository on GitHub.
+2. Go to `Settings` -> `Pages`.
+3. Under `Build and deployment`, set `Source` to `GitHub Actions`.
+4. Push to `main` (or trigger the workflow manually from the `Actions` tab).
+5. Wait for the `Deploy to GitHub Pages` workflow to complete.
 
-Yes, you can!
+## Where to find the deployed URL
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Use either location:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+1. `Settings` -> `Pages` (shows the live site link).
+2. `Actions` -> `Deploy to GitHub Pages` -> `deploy` job output (`page_url`).
+
+Expected pattern:
+
+`https://<username>.github.io/Japanese/`
+
+## Troubleshooting
+
+Blank page after deploy is usually a base path mismatch.
+
+1. Verify `vite.config.ts` uses `base: "/Japanese/"` for production builds.
+2. Verify router basename uses `import.meta.env.BASE_URL` in `src/App.tsx`.
+3. Rebuild/redeploy after any base-path change.
+
+If workflow deployment fails:
+
+1. Confirm repository `Actions` are enabled.
+2. Confirm Pages source is `GitHub Actions`.
+3. Confirm workflow permissions include `pages: write` and `id-token: write`.
