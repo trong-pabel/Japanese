@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 40 30% 97%;
+    --foreground: 220 20% 15%;
+
+    --card: 40 25% 95%;
+    --card-foreground: 220 20% 15%;
+
+    --popover: 40 30% 97%;
+    --popover-foreground: 220 20% 15%;
+
+    --primary: 0 72% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 20% 90%;
+    --secondary-foreground: 220 20% 20%;
+
+    --muted: 40 15% 92%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 25 80% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 0 72% 51%;
+
+    --radius: 0.75rem;
+
+    --correct: 142 60% 45%;
+    --correct-foreground: 0 0% 100%;
+    --incorrect: 0 72% 51%;
+    --incorrect-foreground: 0 0% 100%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+}

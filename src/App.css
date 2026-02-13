@@ -1,0 +1,53 @@
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+.home-card {
+  @apply flex flex-col items-center justify-center px-10 py-8 rounded-2xl bg-card border-2 border-border 
+         hover:border-primary hover:shadow-lg transition-all duration-300 cursor-pointer min-w-[180px];
+}
+
+.quiz-btn-primary {
+  @apply px-8 py-3 rounded-xl bg-primary text-primary-foreground font-medium text-lg 
+         hover:opacity-90 transition-opacity active:scale-95;
+}
+
+.quiz-btn-secondary {
+  @apply px-8 py-3 rounded-xl bg-secondary text-secondary-foreground font-medium text-lg 
+         hover:opacity-80 transition-opacity active:scale-95;
+}
+
+.quiz-option {
+  @apply w-full text-left px-4 py-3 rounded-xl border-2 border-border bg-card 
+         hover:border-primary hover:bg-muted transition-all cursor-pointer text-foreground font-medium
+         flex items-center gap-3;
+}
+
+.quiz-option-correct {
+  @apply w-full text-left px-4 py-3 rounded-xl border-2 font-medium flex items-center gap-3;
+  border-color: hsl(var(--correct));
+  background-color: hsl(var(--correct) / 0.1);
+  color: hsl(var(--correct));
+}
+
+.quiz-option-incorrect {
+  @apply w-full text-left px-4 py-3 rounded-xl border-2 font-medium flex items-center gap-3;
+  border-color: hsl(var(--incorrect));
+  background-color: hsl(var(--incorrect) / 0.1);
+  color: hsl(var(--incorrect));
+}
+
+.quiz-option-disabled {
+  @apply w-full text-left px-4 py-3 rounded-xl border-2 border-border bg-card 
+         text-muted-foreground font-medium opacity-50 flex items-center gap-3;
+}
+
+.quiz-badge {
+  @apply inline-flex items-center justify-center w-7 h-7 rounded-lg bg-muted text-muted-foreground 
+         text-sm font-bold shrink-0;
+}
