@@ -2,76 +2,111 @@
 
 This project is configured for deployment to GitHub Pages at:
 
-`https://<username>.github.io/Japanese/`
+https://<username>.github.io/Japanese/
 
-## Local development
+------------------------------------------------------------
+Local Development
+------------------------------------------------------------
 
-This repository contains `bun.lockb`, so Bun is the primary package manager.
+This project uses npm as the package manager.
 
-```sh
-bun install
-bun run dev
-```
+Install dependencies:
 
-If you prefer npm:
+npm install
 
-```sh
-npm ci
+Start development server:
+
 npm run dev
-```
 
-## Build locally
+Open the local URL shown in the terminal (usually):
 
-```sh
-bun run build
-```
+http://localhost:5173/
 
-The production output is generated in `dist/`.
+------------------------------------------------------------
+Production Build (Local Test)
+------------------------------------------------------------
 
-## GitHub Pages deployment (automatic on push to `main`)
+Build the production version:
 
-The workflow file is:
+npm run build
 
-`.github/workflows/deploy-pages.yml`
+The production output is generated in:
+
+dist/
+
+Preview the production build locally:
+
+npm run preview
+
+------------------------------------------------------------
+GitHub Pages Deployment
+------------------------------------------------------------
+
+Deployment runs automatically on push to the main branch.
+
+The workflow file:
+
+.github/workflows/deploy-pages.yml
 
 It will:
 
 1. Check out code.
 2. Set up Node.js.
-3. Install dependencies (`bun install` when `bun.lockb` exists, otherwise `npm ci`).
+3. Install dependencies using npm ci.
 4. Build the site.
-5. Upload `dist/` as the Pages artifact.
+5. Upload dist/ as the Pages artifact.
 6. Deploy using official GitHub Pages actions.
 
-## One-time GitHub setup
+------------------------------------------------------------
+One-time GitHub Setup
+------------------------------------------------------------
 
 1. Open your repository on GitHub.
-2. Go to `Settings` -> `Pages`.
-3. Under `Build and deployment`, set `Source` to `GitHub Actions`.
-4. Push to `main` (or trigger the workflow manually from the `Actions` tab).
-5. Wait for the `Deploy to GitHub Pages` workflow to complete.
+2. Go to Settings → Pages.
+3. Under Build and deployment, set:
 
-## Where to find the deployed URL
+   Source → GitHub Actions
 
-Use either location:
+4. Push to main (or trigger workflow manually from the Actions tab).
+5. Wait for the Deploy to GitHub Pages workflow to complete.
 
-1. `Settings` -> `Pages` (shows the live site link).
-2. `Actions` -> `Deploy to GitHub Pages` -> `deploy` job output (`page_url`).
+------------------------------------------------------------
+Deployed URL
+------------------------------------------------------------
 
-Expected pattern:
+After successful deployment, your site will be available at:
 
-`https://<username>.github.io/Japanese/`
+https://<username>.github.io/Japanese/
 
-## Troubleshooting
+You can find the live URL in:
 
-Blank page after deploy is usually a base path mismatch.
+- Settings → Pages
+- or Actions → Deploy to GitHub Pages → deploy job output
 
-1. Verify `vite.config.ts` uses `base: "/Japanese/"` for production builds.
-2. Verify router basename uses `import.meta.env.BASE_URL` in `src/App.tsx`.
-3. Rebuild/redeploy after any base-path change.
+------------------------------------------------------------
+Troubleshooting
+------------------------------------------------------------
 
-If workflow deployment fails:
+Blank page after deploy is usually caused by base path mismatch.
 
-1. Confirm repository `Actions` are enabled.
-2. Confirm Pages source is `GitHub Actions`.
-3. Confirm workflow permissions include `pages: write` and `id-token: write`.
+Verify vite.config.ts contains:
+
+export default defineConfig({
+  base: process.env.NODE_ENV === 'production'
+    ? '/Japanese/'
+    : '/',
+})
+
+If you change base, rebuild and redeploy.
+
+------------------------------------------------------------
+
+If deployment fails, check:
+
+1. Repository Actions are enabled.
+2. Pages source is set to GitHub Actions.
+3. Workflow permissions include:
+
+permissions:
+  pages: write
+  id-token: write
