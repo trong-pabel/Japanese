@@ -1,5 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
+/** Returns true if the string contains any Japanese characters (hiragana, katakana, or kanji). */
+function isJapanese(text: string): boolean {
+  return /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\u4e00-\u9fff\uff00-\uffef]/.test(text);
+}
+
 type QuizItem = {
   id: number;
   question: string;
@@ -252,11 +257,10 @@ export default function Quiz({ title, items, totalQuestions, onFinish, storageKe
 
       <div className="mt-4 flex items-center justify-center min-h-[120px]">
         <p
-          className={`text-center font-serif font-bold ${
-            question.prompt.length <= 3
+          className={`text-center font-serif font-bold ${question.prompt.length <= 3
               ? "text-7xl sm:text-8xl"
               : "text-2xl sm:text-3xl"
-          } text-foreground`}
+            } text-foreground${isJapanese(question.prompt) ? " jp-text" : ""}`}
         >
           {question.prompt}
         </p>
@@ -281,7 +285,7 @@ export default function Quiz({ title, items, totalQuestions, onFinish, storageKe
               <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-border bg-muted text-foreground text-lg font-bold shrink-0">
                 {idx + 1}
               </span>
-              <span className="flex-1 text-xl sm:text-2xl leading-tight font-semibold">{opt}</span>
+              <span className={`flex-1 text-xl sm:text-2xl leading-tight font-semibold${isJapanese(opt) ? " jp-text" : ""}`}>{opt}</span>
             </button>
           );
         })}
